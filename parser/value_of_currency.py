@@ -23,8 +23,9 @@ def get_value_of_currency(currencies: List[str], session: requests.Session=reque
         response = session.get(url=url, headers=headers)
         response_json = response.json()
 
-        list_of_results.append({currency: response_json['data']['sum_result']})
+        if response_json['data'] is not None:
+            list_of_results.append({currency: response_json['data']['sum_result']})
+        else:
+            list_of_results.append('не найдено')
         if len(currencies) > 5: time.sleep(.01)
     return list_of_results
-
-
